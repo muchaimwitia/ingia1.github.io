@@ -5,29 +5,13 @@ include('includes/dbconnection.php');
 if (strlen($_SESSION['hbmsaid']==0)) {
   header('location:logout.php');
   } else{
-    if(isset($_POST['submit']))
-  {
-    $adminid=$_SESSION['hbmsaid'];
-    $AName=$_POST['adminname'];
-  $mobno=$_POST['mobilenumber'];
-  $email=$_POST['email'];
-  $sql="update tbladmin set AdminName=:adminname,MobileNumber=:mobilenumber,Email=:email where ID=:aid";
-     $query = $dbh->prepare($sql);
-     $query->bindParam(':adminname',$AName,PDO::PARAM_STR);
-     $query->bindParam(':email',$email,PDO::PARAM_STR);
-     $query->bindParam(':mobilenumber',$mobno,PDO::PARAM_STR);
-     $query->bindParam(':aid',$adminid,PDO::PARAM_STR);
-$query->execute();
+   
 
-        echo '<script>alert("Profile has been updated")</script>';
-     echo "<script>window.location.href ='profile.php'</script>";
-
-  }
-  ?>
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Hotel Booking Management System | Profile</title>
+<title>Hotel Booking Management System | Enquiry Between Dates Report</title>
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap Core CSS -->
@@ -47,6 +31,7 @@ $query->execute();
 <script src="js/light.js"></script>	
 <!-- //lined-icons -->
 <script src="js/jquery-1.10.2.min.js"></script>
+   <!--pie-chart--->
 </head> 
 <body>
    <div class="page-container">
@@ -62,34 +47,20 @@ $query->execute();
 	<!-- start content -->
 	<div class="grids">
 					<div class="progressbar-heading grids-heading">
-						<h2>Admin Profile</h2>
+						<h2>Enquiry Between Dates Report</h2>
 					</div>
 					<div class="panel panel-widget forms-panel">
 						<div class="forms">
 							<div class="form-grids widget-shadow" data-example-id="basic-forms"> 
 								<div class="form-title">
-									<h4>Admin Profile :</h4>
+									<h4>Enquiry Between Dates Report :</h4>
 								</div>
 								<div class="form-body">
-									<?php
-
-$sql="SELECT * from  tbladmin";
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $row)
-{               ?>
-									<form method="post">
-									 <div class="form-group"> <label for="exampleInputEmail1">Admin Name</label> <input type="text" class="form-control"  name="adminname" value="<?php  echo $row->AdminName;?>" required='true'> </div> 
-									 <div class="form-group"> <label for="exampleInputEmail1">User Name</label> <input type="text" class="form-control" name="username" value="<?php  echo $row->UserName;?>" readonly="true"> </div>
-									 <div class="form-group"> <label for="exampleInputEmail1">Email</label> <input type="email" class="form-control" name="email" value="<?php  echo $row->Email;?>" required='true'> </div>
-									 <div class="form-group"> <label for="exampleInputEmail1">Contact Number</label> <input type="text" class="form-control" name="mobilenumber" value="<?php  echo $row->MobileNumber;?>" required='true' maxlength='10'> </div>
-									 <div class="form-group"> <label for="exampleInputEmail1">Admin Registration Date</label> <input type="text" class="form-control" id="email2" name="" value="<?php  echo $row->AdminRegdate;?>" readonly="true"> </div>
-									<?php $cnt=$cnt+1;}} ?>
-									   
+									
+									<form method="post" action="enquiry-bwdates-reports-details.php">
+									 <div class="form-group"> <label for="exampleInputEmail1">From Date:</label>  <input type="date" class="form-control" id="fromdate" name="fromdate" value="" required='true'> </div> 
+									
+									<div class="form-group"> <label for="exampleInputEmail1">To Date:</label>  <input type="date" class="form-control" id="todate" name="todate" value="" required='true'> </div>
 									   <button type="submit" class="btn btn-default" name="submit">Submit</button> </form> 
 								</div>
 							</div>
@@ -113,7 +84,7 @@ foreach($results as $row)
 			<?php include_once('includes/sidebar.php');?>
 							  <div class="clearfix"></div>		
 							</div>
-							
+<!--js -->
 <script src="js/jquery.nicescroll.js"></script>
 <script src="js/scripts.js"></script>
 <!-- Bootstrap Core JavaScript -->
@@ -121,7 +92,7 @@ foreach($results as $row)
    <!-- /Bootstrap Core JavaScript -->
    <!-- real-time -->
 <script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
-
+	
 		   <script src="js/menu_jquery.js"></script>
 </body>
 </html><?php }  ?>
